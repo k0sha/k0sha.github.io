@@ -486,7 +486,7 @@
     // --- ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ---
 
     let currentLanguage = 'ru';
-    let timerValue = 10;
+    let timerValue = 5;
     let timerId = null;
     let redirectTo = "";
     let appInfo = null;
@@ -548,7 +548,7 @@
             redirectTextEl.textContent = `${t("redirecting_to")} ${appName}...`;
 
             timerSection.style.display = "block";
-            proceedBtn.style.display = "inline-flex";
+            proceedBtn.style.display = "none";
             proceedBtn.href = redirectTo;
 
             if (appInfo && appInfo.id === 'obtainium') {
@@ -561,7 +561,7 @@
                         <a href="https://f-droid.org/packages/dev.imranr.obtainium.fdroid/" class="btn btn-primary" target="_blank">${t('download_fdroid')}</a>
                     `;
             } else {
-                afterTimerText.style.display = "block";
+                afterTimerText.style.display = "none";
                 obtainiumSectionEl.style.display = "none";
             }
         }
@@ -571,6 +571,8 @@
         if (!redirectTo || timerId) return;
 
         const timerEl = document.getElementById("timer");
+        const proceedBtn = document.getElementById("proceedBtn");
+        const afterTimerText = document.getElementById("afterTimerText");
         timerEl.textContent = timerValue;
 
         timerId = setInterval(() => {
@@ -578,6 +580,8 @@
             timerEl.textContent = timerValue;
             if (timerValue <= 0) {
                 clearInterval(timerId);
+                proceedBtn.style.display = "inline-flex";
+                afterTimerText.style.display = "block";
                 window.location.href = redirectTo;
             }
         }, 1000);
